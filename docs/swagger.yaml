@@ -1,0 +1,182 @@
+definitions:
+  payments.CreatePaymentRequest:
+    properties:
+      amount:
+        type: number
+      description:
+        type: string
+      user:
+        type: string
+    type: object
+  payments.GetAllPaymentsResponse:
+    properties:
+      payments:
+        items:
+          $ref: '#/definitions/payments.GetPaymentResponse'
+        type: array
+    type: object
+  payments.GetPaymentResponse:
+    properties:
+      amount:
+        type: number
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: string
+      status:
+        type: string
+      updated_at:
+        type: string
+      user:
+        type: string
+    type: object
+  services.Car:
+    properties:
+      id:
+        type: string
+      owner:
+        type: string
+      registrationPlate:
+        type: string
+    type: object
+  services.CreateCarRequest:
+    properties:
+      owner:
+        type: string
+      registrationPlate:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /cars:
+    get:
+      description: Get all cars
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/services.Car'
+            type: array
+      summary: Get all cars
+      tags:
+      - cars
+    post:
+      consumes:
+      - application/json
+      description: Create a car
+      parameters:
+      - description: Car
+        in: body
+        name: car
+        required: true
+        schema:
+          $ref: '#/definitions/services.CreateCarRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create a car
+      tags:
+      - cars
+  /cars/{id}:
+    delete:
+      description: Delete a car
+      parameters:
+      - description: Car ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete a car
+      tags:
+      - cars
+    get:
+      description: Get a car
+      parameters:
+      - description: Car ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/services.Car'
+      summary: Get a car
+      tags:
+      - cars
+  /payments:
+    get:
+      description: Get all payments
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/payments.GetAllPaymentsResponse'
+            type: array
+      summary: Get all payments
+      tags:
+      - payments
+    post:
+      consumes:
+      - application/json
+      description: Create a payment
+      parameters:
+      - description: Payment
+        in: body
+        name: payment
+        required: true
+        schema:
+          $ref: '#/definitions/payments.CreatePaymentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Create a payment
+      tags:
+      - payments
+  /payments/{id}:
+    get:
+      description: Get a payment
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/payments.GetPaymentResponse'
+      summary: Get a payment
+      tags:
+      - payments
+swagger: "2.0"
